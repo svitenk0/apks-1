@@ -169,8 +169,10 @@ def check_build(r: Report) -> None:
     script = ["cmd", "/c", str(ROOT / "ci.bat")] if IS_WINDOWS else ["bash", str(ROOT / "ci.sh")]
     if not r.add(Path(script[-1]).is_file(), f"build: {Path(script[-1]).name} exists"):
         return
-    print(f"----- running {Path(script[-1]).name} -----", flush=True)
-    rc = subprocess.run(script, cwd=ROOT).returncode
+    # Reuse the interpreter running /check: a bare `python` may be missing or a Store stub
+    env = {**os.environ, "PYTHON": os.environ.get("PYTHON") or sys.executable}
+    print(f"----- running {Path(script[-1]).name} (PYTHON={env['PYTHON']}) -----", flush=True)
+    rc = subprocess.run(script, cwd=ROOT, env=env).returncode
     print(f"----- {Path(script[-1]).name} exit code {rc} -----", flush=True)
     if not r.add(rc == 0, "build: ci script succeeded", f"exit code {rc}"):
         return
