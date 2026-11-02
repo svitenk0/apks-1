@@ -23,20 +23,23 @@ argument-hint: "[project_name=hello]"
 | 2    | `/create-project` | `.gitignore`, `project_name`           | `src/hello/`               |
 | 3    | `/create-build`   | `src/hello/__main__.py`                | `ci.sh`, `ci.bat`, тести, `build/bin/hello` |
 | 4    | `/create-actions` | `ci.sh`, `ci.bat`                      | `.github/workflows/ci.yml` |
+| 4a   | документація      | результати кроків 1–4                  | `docs/usage.md`, `docs/ai-log.md` |
 | 5    | `/check`          | усе вище                               | `RESULT: PASS` / `FAIL`    |
 
-Після кроків 2–4 (якщо команда створила або змінила файли) запропонуй окремий змістовний коміт:
+Крок 4a (виконується **до** `/check`, бо `/check` вимагає `docs/usage.md`):
+- створи `docs/usage.md`, якщо його немає: точні команди запуску агента (`/init`, `/check`, окремі
+  commands), локальної збірки (`ci.sh`/`ci.bat`), запуску застосунку (`run.*`, `build/bin/hello`);
+- допиши `docs/ai-log.md`: запуск оркестратора, результат кожного кроку, помилки та рішення.
+
+Після кроків 2–4a (якщо команда створила або змінила файли) запропонуй окремий змістовний коміт:
 - крок 1+2: `feat: scaffold Python Hello World project`
 - крок 3: `build: add venv build scripts, pytest tests and PyInstaller packaging`
 - крок 4: `ci: add GitHub Actions matrix for Windows, Linux and macOS`
+- крок 4a: `docs: add usage guide and AI interaction log`
 
 Коміти виконуй лише локально; `git push` і створення PR — тільки на прохання користувача.
 
-Наприкінці:
-6. Створи `docs/usage.md`, якщо його немає: точні команди запуску агента (`/init`, `/check`, окремі
-   commands), локальної збірки (`ci.sh`/`ci.bat`), запуску застосунку (`run.*`, `build/bin/hello`).
-7. Допиши `docs/ai-log.md`: запуск оркестратора, результат кожного кроку, помилки та рішення.
-8. Виведи підсумковий звіт.
+Наприкінці виведи підсумковий звіт і допиши в `docs/ai-log.md` результат `/check`.
 
 ## Обробка помилок
 - Якщо крок завершився помилкою — **зупинись**. Не виконуй наступні кроки, не позначай роботу успішною.

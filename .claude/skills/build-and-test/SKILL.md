@@ -260,6 +260,7 @@ CI: SUCCESS
 | Симптом | Причина | Дія |
 |---------|---------|-----|
 | `test_BasicAddition FAILED: assert 6 == 5` | помилка в `add()` | виправити `calc.py`, не змінювати очікування тесту |
+| `Python was not found; run without arguments to install from the Microsoft Store` | у `PATH` лише заглушка Windows Store | задати інтерпретатор явно: `set PYTHON=C:\...\python.exe` / `PYTHON=/path/python3 ./ci.sh` (`/check` робить це автоматично) |
 | `ModuleNotFoundError: hello` у pytest | нема `pythonpath = ["src"]` у `pyproject.toml` | додати ключ (без дублювання секції) |
 | `./ci.sh: Permission denied` | нема біта виконання | `git update-index --chmod=+x ci.sh` або запуск `bash ci.sh` |
 | `/usr/bin/env: 'bash\r'` | CRLF у `ci.sh` | перевірити `.gitattributes` (`*.sh eol=lf`) |
