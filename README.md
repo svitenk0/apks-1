@@ -60,3 +60,12 @@ python .claude/scripts/check.py --no-build # без збірки
 ```
 
 Докладніше — у [docs/architecture.md](docs/architecture.md).
+
+## Запуск проєкту
+
+| ОС            | Запуск з вихідного коду | Збірка + тести + виконуваний файл |
+|---------------|-------------------------|-----------------------------------|
+| Linux / macOS | `./run.sh`              | `./ci.sh` → `build/bin/hello`     |
+| Windows       | `run.bat`               | `ci.bat` → `build\bin\hello.exe`  |
+
+Детальніше — у [docs/usage.md](docs/usage.md).

@@ -1,0 +1,13 @@
+[project]
+name = "hello"
+version = "1.0.0"
+description = "Cross-platform Hello World (lab 1, variant 2: Python + venv + pytest)"
+requires-python = ">=3.10"
+
+[project.scripts]
+hello = "hello.__main__:main"
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+testpaths = ["tests"]
+addopts = "-v"

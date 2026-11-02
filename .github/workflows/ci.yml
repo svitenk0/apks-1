@@ -1,0 +1,54 @@
+name: CI
+
+on:
+  push:
+    branches: [develop, master, main, "feature/**"]
+  pull_request:
+    branches: [develop, master, main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-and-test:
+    name: build-and-test (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Configure Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Build and test (Linux/macOS)
+        if: runner.os != 'Windows'
+        shell: bash
+        run: bash ./ci.sh
+
+      - name: Build and test (Windows)
+        if: runner.os == 'Windows'
+        shell: cmd
+        run: call ci.bat
+
+      - name: Upload executable
+        uses: actions/upload-artifact@v4
+        with:
+          name: hello-${{ matrix.os }}
+          path: build/bin/
+          if-no-files-found: error
+
+      - name: Upload test report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results-${{ matrix.os }}
+          path: build/test-results/
+          if-no-files-found: warn

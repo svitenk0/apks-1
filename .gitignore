@@ -1,3 +1,31 @@
 # Claude Code local settings
 .claude/settings.local.json
 __pycache__/
+
+# Python
+*.py[cod]
+.venv/
+venv/
+*.egg-info/
+.pytest_cache/
+
+# Build output
+build/
+dist/
+*.spec
+
+# Test / coverage reports
+.coverage
+htmlcov/
+
+# Secrets and local environment
+.env
+.env.*
+*.pem
+*.key
+
+# IDE / OS
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
